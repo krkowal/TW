@@ -4,15 +4,25 @@ package sprawko3;
 
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 class Producer extends Thread {
-    private Buffer _buf;
-
+    private Buffer buf;
+    public Producer(Buffer buf){
+        this.buf = buf;
+    }
     public void run() {
         for (int i = 0; i < 100; ++i) {
-            _buf.put(i);
+            buf.put(i);
+            try{
+                sleep((int)(Math.random()*100));
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
     }
+
 }
 
 class Consumer extends Thread {
@@ -26,7 +36,7 @@ class Consumer extends Thread {
         for (int i = 0; i < 100; ++i) {
             System.out.println(buf.get());
             try{
-                sleep((int) (Math.random() * 100))
+                sleep((int) (Math.random() * 100));
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -67,7 +77,7 @@ class Buffer {
             }
         }
         int ind = new Random().nextInt(arr.size());
-        int item = arr.get(ind)
+        int item = arr.get(ind);
         arr.remove(item);
         notify();
         System.out.println("consumer is getting"+item);
@@ -79,9 +89,14 @@ class PKmon {
     public static void main(String[] args) {
         Buffer buf = new Buffer(100);
         int n1 = 1;
-        int n2 = 2;
+        int n2 = 1;
 
         int prod = 100;
         int cons = 100;
+
+
+        ExecutorService service = Executors.newFixedThreadPool(n1+n2);
+        for(int i = 0;i<n1;i++) service.submit(new Producer(buf));
+        for(int i=0;i<=n2;i++) service.submit(new Consumer(buf));
     }
 }
