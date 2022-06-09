@@ -1,17 +1,13 @@
 package lab7;
 
-import java.util.List;
-
 public class Filozof extends Thread{
     private int _licznik = 0;
     private int num;
-    private List<Widelec> widelce;
-    private final Object lockObject;
+    private Lokaj lokaj;
 
-    public Filozof(int num, List<Widelec> widelce, Object lock){
-        lockObject = lock;
+    public Filozof(int num, Lokaj lokaj){
         this.num= num;
-        this.widelce = widelce;
+        this.lokaj = lokaj;
     }
 
     public void run(){
@@ -20,16 +16,9 @@ public class Filozof extends Thread{
         int prawyWidelec = ((num==0)? 4: num+1);
 
         while (true){
-
-            synchronized (lockObject){
-                widelce.get(lewyWidelec).podnies();
-                widelce.get(prawyWidelec).podnies();
-            }
-
+            lokaj.podajWidelce(lewyWidelec,prawyWidelec);
             _licznik++;
-            widelce.get(lewyWidelec).odloz();
-            widelce.get(prawyWidelec).odloz();
-
+            lokaj.zabierzWidelce(lewyWidelec,prawyWidelec);
             if(_licznik%100==0){
                 System.out.println("Filozof: "+Thread.currentThread() + "jadłem "+_licznik+" razy czas: "+(System.currentTimeMillis()-startTime));
                 break;

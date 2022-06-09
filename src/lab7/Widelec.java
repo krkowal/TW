@@ -7,19 +7,12 @@ public class Widelec {
         this.state = true;
     }
 
-    public synchronized void podnies(){
-        while(!state){
-            try{
-                wait();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-        state= false;
+    public void podnies(){
+        state=false;
     }
-    public synchronized odloz(){
+
+    public void odloz(){
         state=true;
-        notifyAll();
     }
 
     public boolean zajety(){
