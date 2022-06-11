@@ -9,7 +9,7 @@ public class ElementList {
     Random rand = new Random();
     private Lock lock = new ReentrantLock();
 
-    public ElementList(Element firstElement) {
+    public ElementList() {
         this.firstElement = null;
     }
 
