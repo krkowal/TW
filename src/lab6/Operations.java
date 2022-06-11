@@ -1,16 +1,15 @@
 package lab6;
 
-public class SingleOperation implements Runnable{
+public class Operations implements Runnable{
 
-    private ElementList elementList;
+    private final ElementList elementList;
 
-    public SingleOperation(ElementList elementList) {
+    public Operations(ElementList elementList) {
         this.elementList = elementList;
     }
 
     @Override
     public void run() {
-
         Object[] objectList = new Object[5];
         for(int i=0;i<5;i++){
             objectList[i] = new Object();

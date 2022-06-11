@@ -1,8 +1,8 @@
 package lab6;
 
-import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.PrintWriter;
-import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -12,11 +12,11 @@ public class Main {
         int numberOfThreads = 1000;
         ElementList elementList = new ElementList();
         try{
-            PrintWriter results = new PrintWriter("src/lab6/result.txt","UTF-8");
+            PrintWriter results = new PrintWriter("src/lab6/result2.txt", StandardCharsets.UTF_8);
             for(int j = 0; j<numberOfThreads;j++){
                 List<Thread> threads = new ArrayList<>();
                 for(int i =0;i<j;i++){
-                    threads.add(new Thread(new SingleOperation(elementList)));
+                    threads.add(new Thread(new Operations(elementList)));
                 }
                 long startTime = System.nanoTime();
                 for(Thread thread : threads){
@@ -29,7 +29,7 @@ public class Main {
             }
             results.close();
 
-        } catch (FileNotFoundException | UnsupportedEncodingException | InterruptedException e) {
+        } catch (InterruptedException | IOException e) {
             e.printStackTrace();
         }
     }
