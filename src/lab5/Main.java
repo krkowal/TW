@@ -3,7 +3,7 @@ package lab5;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class PKmon {
+public class Main {
     public static void main(String[] args) {
         long start = System.currentTimeMillis();
         int M = 100;
